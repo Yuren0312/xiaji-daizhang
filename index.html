@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虾记代账 - 一站式智能代账平台</title>
+<meta name="description" content="虾记代账，面向小微企业和个体工商户的一站式智能代账平台。自动记账、智能报税、财务报表一键生成，让记账更简单，让经营更清晰。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23FF6B35'/%3E%3Cg fill='%23fff'%3E%3Cpath d='M26 15c-6-8-16-11-23-8 7 2 13 5 17 10z'/%3E%3Cpath d='M38 15c6-8 16-11 23-8-7 2-13 5-17 10z'/%3E%3Cellipse cx='32' cy='20' rx='9' ry='7'/%3E%3Cellipse cx='32' cy='30' rx='12' ry='5.5'/%3E%3Cellipse cx='32' cy='38' rx='15' ry='5.5'/%3E%3Cpath d='M17 41c-4 6-10 10-16 10 6 2 13 2 17-2z'/%3E%3Cpath d='M47 41c4 6 10 10 16 10-6 2-13 2-17-2z'/%3E%3Cpath d='M27 43l5 14 5-14z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== 导航栏 ===== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="34" height="34">
+          <circle cx="32" cy="32" r="32" fill="#FF6B35"/>
+          <g fill="#fff">
+            <path d="M26 15c-6-8-16-11-23-8 7 2 13 5 17 10z"/>
+            <path d="M38 15c6-8 16-11 23-8-7 2-13 5-17 10z"/>
+            <ellipse cx="32" cy="20" rx="9" ry="7"/>
+            <ellipse cx="32" cy="30" rx="12" ry="5.5"/>
+            <ellipse cx="32" cy="38" rx="15" ry="5.5"/>
+            <path d="M17 41c-4 6-10 10-16 10 6 2 13 2 17-2z"/>
+            <path d="M47 41c4 6 10 10 16 10-6 2-13 2-17-2z"/>
+            <path d="M27 43l5 14 5-14z"/>
+          </g>
+        </svg>
+      </span>
+      <span class="brand-name">虾记代账</span>
+    </a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="#features">功能介绍</a>
+      <a href="#services">服务项目</a>
+      <a href="#pricing">套餐价格</a>
+      <a href="#cases">客户案例</a>
+      <a href="#faq">常见问题</a>
+      <a href="#contact">联系我们</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="#contact">登录</a>
+      <a class="btn btn-primary btn-sm" href="#contact">免费注册</a>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== Hero 首屏 ===== -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="grid-lines"></div>
+  </div>
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <span class="hero-badge">🦐 专注小微企业与个体工商户</span>
+      <h1>让记账更简单<br><em>让经营更清晰</em></h1>
+      <p class="hero-sub">虾记代账 —— 一站式智能代账平台。银行流水自动导入、AI 智能记账、税期自动提醒、财务报表一键生成，帮您省下每个月的记账烦恼。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#pricing">立即免费试用</a>
+        <a class="btn btn-outline btn-lg" href="#features">了解功能</a>
+      </div>
+      <ul class="hero-points">
+        <li>免费试用 30 天</li>
+        <li>无需安装，浏览器即用</li>
+        <li>数据银行级加密</li>
+      </ul>
+    </div>
+    <div class="hero-visual">
+      <div class="browser-window">
+        <div class="browser-bar">
+          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+          <span class="browser-url">app.xiaojidaizhang.com</span>
+        </div>
+        <div class="app-body">
+          <aside class="app-side">
+            <div class="side-logo"><span class="side-shrimp">🦐</span> 虾记代账</div>
+            <ul class="side-menu">
+              <li class="active"><span class="mi">◉</span>工作台</li>
+              <li><span class="mi">📒</span>智能记账</li>
+              <li><span class="mi">📅</span>报税提醒</li>
+              <li><span class="mi">📊</span>财务报表</li>
+              <li><span class="mi">🧾</span>票据管理</li>
+              <li><span class="mi">⚙</span>账套设置</li>
+            </ul>
+          </aside>
+          <div class="app-main">
+            <div class="app-top">
+              <div>
+                <div class="app-greet">早上好，张老板 👋</div>
+                <div class="app-date">今天 8 月 7 日 · 距离报税截止还有 8 天</div>
+              </div>
+              <div class="app-tag">本月已自动记账 <b>327</b> 笔</div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-label">本月营收</div><div class="kpi-val">¥ 286,540</div><div class="kpi-up">↑ 12.6%</div></div>
+              <div class="kpi"><div class="kpi-label">待办事项</div><div class="kpi-val">3 项</div><div class="kpi-up kpi-warn">需处理</div></div>
+              <div class="kpi"><div class="kpi-label">应交税费</div><div class="kpi-val">¥ 8,720</div><div class="kpi-up kpi-down">待申报</div></div>
+            </div>
+            <div class="chart-row">
+              <div class="chart-card">
+                <div class="chart-title">近 6 月营收趋势 <span class="chart-sub">单位：万元</span></div>
+                <div class="bars">
+                  <div class="bar" style="height:38%"><i>11.2</i></div>
+                  <div class="bar" style="height:52%"><i>15.6</i></div>
+                  <div class="bar" style="height:44%"><i>13.1</i></div>
+                  <div class="bar" style="height:64%"><i>19.2</i></div>
+                  <div class="bar" style="height:58%"><i>17.4</i></div>
+                  <div class="bar hot" style="height:82%"><i>24.8</i></div>
+                </div>
+                <div class="bar-labels"><span>3月</span><span>4月</span><span>5月</span><span>6月</span><span>7月</span><span>8月</span></div>
+              </div>
+              <div class="bill-card">
+                <div class="chart-title">最新流水</div>
+                <ul class="bills">
+                  <li><span class="bill-ico ico-in">入</span><span class="bill-name">微信收款 · 客户A</span><span class="bill-money in">+¥ 12,800</span></li>
+                  <li><span class="bill-ico ico-out">支</span><span class="bill-name">供应商货款</span><span class="bill-money">-¥ 8,400</span></li>
+                  <li><span class="bill-ico ico-in">入</span><span class="bill-name">银行转账 · 客户B</span><span class="bill-money in">+¥ 36,000</span></li>
+                  <li><span class="bill-ico ico-out">税</span><span class="bill-name">增值税申报（待确认）</span><span class="bill-money warn">提醒</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="float-card fc-1">✓ 流水已自动对账 <b>327 笔</b></div>
+      <div class="float-card fc-2">📅 8 月 15 日前需完成 <b>增值税申报</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 数据信任条 ===== -->
+<section class="stats">
+  <div class="container stats-inner">
+    <div class="stat"><div class="stat-num" data-count="100000">0</div><div class="stat-lab">+ 企业用户</div></div>
+    <div class="stat"><div class="stat-num" data-count="98">0</div><div class="stat-lab">% 客户满意度</div></div>
+    <div class="stat"><div class="stat-num" data-count="32000000">0</div><div class="stat-lab">+ 笔凭证自动处理</div></div>
+    <div class="stat"><div class="stat-num" data-count="30">0</div><div class="stat-lab">+ 城市服务覆盖</div></div>
+  </div>
+</section>
+
+<!-- ===== 功能介绍 ===== -->
+<section class="section features" id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">功能介绍</span>
+      <h2>一个平台，搞定所有记账琐事</h2>
+      <p>从流水导入到报税完成，全程智能化处理，让专业的事变得简单。</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card feat">
+        <div class="feat-ico i1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"/><path d="M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M8 11h8M8 15h5"/></svg></div>
+        <h3>自动记账</h3>
+        <p>对接银行及第三方支付流水，AI 自动匹配科目与凭证，无需手工录单，每月数千笔交易几分钟完成。</p>
+      </article>
+      <article class="card feat">
+        <div class="feat-ico i2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></div>
+        <h3>智能报税</h3>
+        <p>税种日历自动同步，申报期智能提醒，常见税种一键申报，税务风险实时预警，不再错过任何一个截止日。</p>
+      </article>
+      <article class="card feat">
+        <div class="feat-ico i3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>财务报表</h3>
+        <p>资产负债表、利润表、现金流量表自动生成，月度经营分析报告一键导出，老板随时掌握公司经营状况。</p>
+      </article>
+      <article class="card feat">
+        <div class="feat-ico i4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></div>
+        <h3>多账套管理</h3>
+        <p>一家企业、多家公司轻松切换，分支机构与关联公司统一管理，数据互不干扰，权限精细可控。</p>
+      </article>
+      <article class="card feat">
+        <div class="feat-ico i5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/><path d="M15 4h5v5"/><path d="M10 14l6-6 4 4-6 6h-4v-4z"/></svg></div>
+        <h3>票据管理</h3>
+        <p>发票拍照上传即自动识别，进销项发票智能归集，原始凭证影像永久归档，查账对账一目了然。</p>
+      </article>
+      <article class="card feat">
+        <div class="feat-ico i6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>数据安全</h3>
+        <p>金融级加密存储，本地与云端双重备份，操作全程留痕审计，财务数据只属于您。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 服务介绍 ===== -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">服务项目</span>
+      <h2>专业代账服务，全方位护航</h2>
+      <p>线上智能工具 + 线下专业会计团队，为您提供完整的财税服务闭环。</p>
+    </div>
+    <div class="services-flow">
+      <div class="svc-card"><div class="svc-num">01</div><h3>代理记账</h3><p>专业会计团队按月记账、出表，账目清晰合规。</p></div>
+      <div class="svc-arrow">→</div>
+      <div class="svc-card"><div class="svc-num">02</div><h3>纳税申报</h3><p>增值税、所得税等全税种按时申报，逾期风险 0。</p></div>
+      <div class="svc-arrow">→</div>
+      <div class="svc-card"><div class="svc-num">03</div><h3>工商注册</h3><p>公司注册、变更、注销全流程代办，跑腿的事交给我们。</p></div>
+      <div class="svc-arrow">→</div>
+      <div class="svc-card"><div class="svc-num">04</div><h3>税务筹划</h3><p>合理合规节税方案，为小微企业量身定制。</p></div>
+    </div>
+    <div class="services-grid">
+      <div class="svc-item"><span class="svc-dot"></span><h4>年度汇算清缴</h4><p>企业所得税年度汇算，多退少补一次搞定。</p></div>
+      <div class="svc-item"><span class="svc-dot"></span><h4>发票代开</h4><p>发票申领、代开、认证全流程指导。</p></div>
+      <div class="svc-item"><span class="svc-dot"></span><h4>财务顾问</h4><p>一对一财务顾问，经营决策有依据。</p></div>
+      <div class="svc-item"><span class="svc-dot"></span><h4>社保公积金</h4><p>开户、增减员、基数调整统一代办。</p></div>
+      <div class="svc-item"><span class="svc-dot"></span><h4>银行开户</h4><p>对公账户开户预约，资料审核协助。</p></div>
+      <div class="svc-item"><span class="svc-dot"></span><h4>政策解读</h4><p>最新财税政策第一时间解读提醒。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 套餐价格 ===== -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">套餐价格</span>
+      <h2>灵活套餐，按需选择</h2>
+      <p>全部套餐均含 30 天免费试用，随时升级，无需绑定。</p>
+    </div>
+    <div class="pricing-grid">
+      <article class="price-card">
+        <div class="price-name">免费版</div>
+        <div class="price-amount"><span class="cur">¥</span>0<small>/月</small></div>
+        <p class="price-desc">个人记账入门</p>
+        <ul class="price-list">
+          <li>单账套 · 1 个用户</li>
+          <li>基础流水记账</li>
+          <li>月度收支报表</li>
+          <li>票据拍照识别（100 张/月）</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="#contact">免费使用</a>
+      </article>
+      <article class="price-card hot">
+        <div class="price-flag">最受欢迎</div>
+        <div class="price-name">专业版</div>
+        <div class="price-amount"><span class="cur">¥</span>199<small>/月</small></div>
+        <p class="price-desc">小微企业首选</p>
+        <ul class="price-list">
+          <li>5 账套 · 5 个用户</li>
+          <li>自动记账 + 智能报税</li>
+          <li>财务报表一键生成</li>
+          <li>税务风险预警</li>
+          <li>专属会计服务</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#contact">立即开通</a>
+      </article>
+      <article class="price-card">
+        <div class="price-name">旗舰版</div>
+        <div class="price-amount"><span class="cur">¥</span>399<small>/月</small></div>
+        <p class="price-desc">多公司经营</p>
+        <ul class="price-list">
+          <li>无限账套 · 20 个用户</li>
+          <li>全部功能无限制</li>
+          <li>年度汇算清缴代办</li>
+          <li>税务筹划方案</li>
+          <li>一对一财务顾问</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="#contact">联系顾问</a>
+      </article>
+    </div>
+    <p class="pricing-note">* 以上价格为展示价格，最终以合同约定为准。支持月付 / 年付，年付享 8.5 折。</p>
+  </div>
+</section>
+
+<!-- ===== 客户案例 ===== -->
+<section class="section cases" id="cases">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">客户案例</span>
+      <h2>十万家企业的一致选择</h2>
+      <p>听听真实客户怎么说，看看虾记代账为他们带来的改变。</p>
+    </div>
+    <div class="cases-grid">
+      <article class="case-card">
+        <div class="case-ava ava-1">张</div>
+        <div class="case-body">
+          <p class="case-quote">"以前月底对账要花两三天，现在流水自动导入，几分钟就出报表。省下的时间都用来跑业务了。"</p>
+          <div class="case-meta"><b>张先生</b><span>杭州 · 贸易公司老板</span></div>
+        </div>
+      </article>
+      <article class="case-card">
+        <div class="case-ava ava-2">李</div>
+        <div class="case-body">
+          <p class="case-quote">"最怕忘记报税，现在系统提前提醒，税务风险也会预警。用了一年，一次罚款都没交过。"</p>
+          <div class="case-meta"><b>李女士</b><span>成都 · 餐饮连锁店主</span></div>
+        </div>
+      </article>
+      <article class="case-card">
+        <div class="case-ava ava-3">王</div>
+        <div class="case-body">
+          <p class="case-quote">"同时管着 3 家公司，多账套切换特别方便。老板随时能看经营报表，决策快多了。"</p>
+          <div class="case-meta"><b>王先生</b><span>深圳 · 科技公司创始人</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section faq" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head">
+      <span class="section-tag">常见问题</span>
+      <h2>您关心的问题，这里都有答案</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">我的财务数据安全吗？<span class="faq-plus">+</span></button>
+        <div class="faq-a"><p>安全。我们采用金融级 AES-256 加密存储，数据在传输与存储环节全程加密，并支持本地与云端双重备份。未经您的授权，任何第三方都无法访问您的数据。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">支持哪些渠道的流水导入？<span class="faq-plus">+</span></button>
+        <div class="faq-a"><p>支持主流银行对公账户、微信支付、支付宝的流水导入，也支持 Excel / CSV 文件批量上传。系统会自动匹配科目并生成凭证，无需手工整理。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">套餐可以随时升级或降级吗？<span class="faq-plus">+</span></button>
+        <div class="faq-a"><p>可以。套餐随时可升级，升级立即生效并按天折算差价；降级将在当前计费周期结束后生效。全程在线操作，无需联系人工。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">我不懂财务，能用吗？<span class="faq-plus">+</span></button>
+        <div class="faq-a"><p>完全可以。虾记代账从设计之初就面向非财务背景的用户，智能记账、自动报税让您几乎不需要财务知识。专业版还配有专属会计，复杂问题随时有人解答。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">和传统代账公司相比有什么优势？<span class="faq-plus">+</span></button>
+        <div class="faq-a"><p>传统代账信息不透明、沟通成本高。虾记代账让您实时查看每一笔记账和报表，账目进度全程透明，配合专业会计服务，效率与专业兼得。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA 横幅 ===== -->
+<section class="cta">
+  <div class="container cta-inner">
+    <h2>现在开始，把记账交给虾记</h2>
+    <p>30 天免费试用，无需信用卡，开通即可体验全部功能。</p>
+    <a class="btn btn-primary btn-lg" href="#contact">免费注册，立即体验</a>
+  </div>
+</section>
+
+<!-- ===== 联系方式 ===== -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">联系我们</span>
+      <h2>有任何问题，随时找我们</h2>
+      <p>工作时间：周一至周五 9:00 - 18:00，专属顾问 5 分钟内响应。</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="c-item"><span class="c-ico">📞</span><div><b>服务热线</b><p>400-886-2358（工作日 9:00-18:00）</p></div></div>
+        <div class="c-item"><span class="c-ico">💬</span><div><b>企业微信</b><p>xiaojidz-2026（添加时备注"虾记代账"）</p></div></div>
+        <div class="c-item"><span class="c-ico">📍</span><div><b>公司地址</b><p>浙江省杭州市西湖区文三路 478 号华星时代广场 12F</p></div></div>
+        <div class="c-item"><span class="c-ico">✉️</span><div><b>商务邮箱</b><p>hello@xiaojidaizhang.com</p></div></div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <h3>预约专属顾问</h3>
+        <div class="form-row">
+          <input type="text" placeholder="您的称呼" required>
+          <input type="tel" placeholder="手机号码" required>
+        </div>
+        <select required>
+          <option value="">企业类型（必选）</option>
+          <option>个体工商户</option>
+          <option>小微企业（1-20 人）</option>
+          <option>成长型企业（20 人以上）</option>
+          <option>多家公司 / 分支机构</option>
+        </select>
+        <textarea rows="3" placeholder="简单描述您的需求（选填）"></textarea>
+        <button class="btn btn-primary btn-block" type="submit">提交预约</button>
+        <p class="form-tip">提交即表示同意隐私政策，我们将严格保护您的信息。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="#top">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="30" height="30">
+            <circle cx="32" cy="32" r="32" fill="#FF6B35"/>
+            <g fill="#fff">
+              <path d="M26 15c-6-8-16-11-23-8 7 2 13 5 17 10z"/>
+              <path d="M38 15c6-8 16-11 23-8-7 2-13 5-17 10z"/>
+              <ellipse cx="32" cy="20" rx="9" ry="7"/>
+              <ellipse cx="32" cy="30" rx="12" ry="5.5"/>
+              <ellipse cx="32" cy="38" rx="15" ry="5.5"/>
+              <path d="M17 41c-4 6-10 10-16 10 6 2 13 2 17-2z"/>
+              <path d="M47 41c4 6 10 10 16 10-6 2-13 2-17-2z"/>
+              <path d="M27 43l5 14 5-14z"/>
+            </g>
+          </svg>
+        </span>
+        <span class="brand-name">虾记代账</span>
+      </a>
+      <p>一站式智能代账平台，让记账更简单，让经营更清晰。</p>
+    </div>
+    <div class="footer-links">
+      <div class="f-col"><h4>产品</h4><a href="#features">功能介绍</a><a href="#pricing">套餐价格</a><a href="#faq">常见问题</a></div>
+      <div class="f-col"><h4>服务</h4><a href="#services">代理记账</a><a href="#services">纳税申报</a><a href="#services">工商注册</a></div>
+      <div class="f-col"><h4>关于</h4><a href="#cases">客户案例</a><a href="#contact">联系我们</a><a href="#">隐私政策</a></div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 虾记代账 · 保留所有权利</span>
+    <span>浙ICP备2026112345号-1</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast">✅ 提交成功！专属顾问将尽快与您联系。</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
