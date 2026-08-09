@@ -141,7 +141,7 @@ button{font-family:inherit;cursor:pointer}
 .bar{flex:1;background:linear-gradient(180deg,#FFD0B8,#FFE7DA);border-radius:6px 6px 3px 3px;position:relative;transition:.3s}
 .bar.hot{background:linear-gradient(180deg,var(--primary),#FFB28A)}
 .bar i{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-style:normal;color:var(--ink-2);opacity:0;transition:.2s}
-.bar:hover i{opacity:1}
+.bar:hover i,.bar.hot i{opacity:1}
 .bar-labels{display:flex;gap:8px;margin-top:8px}
 .bar-labels span{flex:1;text-align:center;font-size:9.5px;color:var(--ink-3)}
 .bill-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-sm)}

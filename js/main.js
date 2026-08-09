@@ -17,14 +17,39 @@
     toggle.addEventListener('click', function () {
       var open = menu.classList.toggle('open');
       toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     menu.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         menu.classList.remove('open');
         toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
       });
     });
   }
+
+  /* 页脚年份自动更新 */
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  /* 工作台 mockup 动态日期（每月 15 日为申报截止日） */
+  (function () {
+    var todayEl = document.getElementById('appToday');
+    var countEl = document.getElementById('appCountdown');
+    if (!todayEl || !countEl) return;
+    var now = new Date();
+    var y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+    todayEl.textContent = m + ' 月 ' + d + ' 日';
+    var due = new Date(y, m, 15); /* 下月 15 日 */
+    var days = Math.ceil((due - now) / 86400000);
+    if (days > 0 && days <= 31) {
+      countEl.textContent = '距离报税截止还有 ' + days + ' 天';
+    } else if (days > 31) {
+      countEl.textContent = '本月申报已完成 · 下期申报倒计时 ' + days + ' 天';
+    } else {
+      countEl.textContent = '本月申报期已结束，请关注下月申报';
+    }
+  })();
 
   /* 滚动显现动画 */
   var revealEls = document.querySelectorAll('.card, .svc-card, .svc-item, .price-card, .case-card, .faq-item, .contact-info, .contact-form, .stat');
@@ -62,7 +87,11 @@
     if (isNaN(target)) return;
     var dur = 1600, start = null;
     function fmt(n) {
-      return n >= 10000 ? (n / 10000).toFixed(n >= 1000000 ? 0 : 1) : String(Math.round(n));
+      if (n >= 10000) {
+        var w = n / 10000;
+        return (w >= 100 || w % 1 === 0 ? String(Math.round(w * 10) / 10) : w.toFixed(1));
+      }
+      return String(Math.round(n));
     }
     function step(ts) {
       if (!start) start = ts;
@@ -85,15 +114,36 @@
   }, { threshold: 0.4 });
   document.querySelectorAll('.stat').forEach(function (s) { statObs.observe(s); });
 
-  /* 表单提交提示 */
+  /* 表单提交提示（防重复提交） */
   var form = document.getElementById('contactForm');
   var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3200);
+  }
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      form.reset();
-      toast.classList.add('show');
-      setTimeout(function () { toast.classList.remove('show'); }, 3200);
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn.disabled) return; /* 防重复提交 */
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      btn.disabled = true;
+      var old = btn.textContent;
+      btn.textContent = '提交中…';
+      /* 静态演示站点：这里可替换为真实接口（如表单后端/云函数） */
+      setTimeout(function () {
+        form.reset();
+        btn.disabled = false;
+        btn.textContent = old;
+        showToast('✅ 提交成功！专属顾问将尽快与您联系。');
+      }, 600);
     });
   }
 })();
