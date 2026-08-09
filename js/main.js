@@ -134,16 +134,35 @@
         form.reportValidity();
         return;
       }
+      var payload = {
+        name: (form.querySelector('[name="name"]').value || '').trim(),
+        phone: (form.querySelector('[name="phone"]').value || '').trim(),
+        type: (form.querySelector('[name="type"]').value || '').trim(),
+        message: (form.querySelector('[name="message"]').value || '').trim()
+      };
       btn.disabled = true;
       var old = btn.textContent;
       btn.textContent = '提交中…';
-      /* 静态演示站点：这里可替换为真实接口（如表单后端/云函数） */
-      setTimeout(function () {
-        form.reset();
+      /* 提交到官网预约接口（https://www.yuniteam.com/api/lead/） */
+      fetch('https://www.yuniteam.com/api/lead/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        return res.json().catch(function () { return { ok: false }; });
+      }).then(function (data) {
+        if (data && data.ok) {
+          form.reset();
+          showToast('✅ 提交成功！专属顾问将尽快与您联系。');
+        } else {
+          showToast('⚠️ 提交未成功，请直接致电 136-9141-0479');
+        }
+      }).catch(function () {
+        showToast('⚠️ 网络异常，请直接致电 136-9141-0479');
+      }).finally(function () {
         btn.disabled = false;
         btn.textContent = old;
-        showToast('✅ 提交成功！专属顾问将尽快与您联系。');
-      }, 600);
+      });
     });
   }
 })();

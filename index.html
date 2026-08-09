@@ -12,6 +12,10 @@
 <meta property="og:site_name" content="虾记代账">
 <meta property="og:title" content="虾记代账 - 一站式智能代账平台">
 <meta property="og:description" content="银行流水自动导入、AI 智能记账、税期自动提醒、财务报表一键生成，帮您省下每个月的记账烦恼。">
+<meta property="og:image" content="https://yuren0312.github.io/xiaji-daizhang/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="虾记代账 - 一站式智能代账平台，让记账更简单，让经营更清晰">
 <meta property="og:url" content="https://yuren0312.github.io/xiaji-daizhang/">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary">
@@ -391,17 +395,17 @@
       <form class="contact-form" id="contactForm">
         <h3>预约专属顾问</h3>
         <div class="form-row">
-          <input type="text" placeholder="您的称呼" required maxlength="20">
-          <input type="tel" placeholder="手机号码" required pattern="1[3-9][0-9]{9}" title="请填写 11 位大陆手机号码" inputmode="numeric">
+          <input type="text" name="name" placeholder="您的称呼" required maxlength="20">
+          <input type="tel" name="phone" placeholder="手机号码" required pattern="1[3-9][0-9]{9}" title="请填写 11 位大陆手机号码" inputmode="numeric">
         </div>
-        <select required>
+        <select name="type" required>
           <option value="">企业类型（必选）</option>
           <option>个体工商户</option>
           <option>小微企业（1-20 人）</option>
           <option>成长型企业（20 人以上）</option>
           <option>多家公司 / 分支机构</option>
         </select>
-        <textarea rows="3" placeholder="简单描述您的需求（选填）"></textarea>
+        <textarea name="message" rows="3" placeholder="简单描述您的需求（选填）" maxlength="200"></textarea>
         <button class="btn btn-primary btn-block" type="submit">提交预约</button>
         <p class="form-tip">提交即表示同意隐私政策，我们将严格保护您的信息。</p>
       </form>
