@@ -141,7 +141,7 @@ button{font-family:inherit;cursor:pointer}
 .bar{flex:1;background:linear-gradient(180deg,#FFD0B8,#FFE7DA);border-radius:6px 6px 3px 3px;position:relative;transition:.3s}
 .bar.hot{background:linear-gradient(180deg,var(--primary),#FFB28A)}
 .bar i{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-style:normal;color:var(--ink-2);opacity:0;transition:.2s}
-.bar:hover i,.bar.hot i{opacity:1}
+.bar:hover i{opacity:1}
 .bar-labels{display:flex;gap:8px;margin-top:8px}
 .bar-labels span{flex:1;text-align:center;font-size:9.5px;color:var(--ink-3)}
 .bill-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-sm)}
@@ -352,6 +352,18 @@ button{font-family:inherit;cursor:pointer}
 /* ===== 显现动画 ===== */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
+
+/* ===== 表单提交成功提示 ===== */
+.form-success{
+  display:flex;align-items:flex-start;gap:12px;padding:16px 18px;margin:6px 0 10px;
+  background:#E9F8F1;border:1.5px solid #6FCF9A;border-radius:12px;
+  color:#1A6E4B;animation:pop .35s cubic-bezier(.2,.9,.3,1.2) both;
+}
+.form-success[hidden]{display:none}
+.form-success-ico{font-size:24px;line-height:1;flex-shrink:0;margin-top:1px}
+.form-success b{display:block;font-size:15px;font-weight:700;margin-bottom:2px}
+.form-success p{font-size:13.5px;color:#2A7A55;line-height:1.5;margin:0}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
 
 /* ===== 响应式 ===== */
 @media (max-width:1024px){
