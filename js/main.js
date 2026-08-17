@@ -94,7 +94,12 @@
     /* 关闭浏览器原生验证弹框，我们自己校验更可控 */
     form.setAttribute('novalidate', 'novalidate');
 
-    /* ===== 企业微信机器人接收地址（填表单线索） ===== */
+    /* ===== 预约表单接收配置 =====
+     * LEAD_URL：同源中转接口（与 index.html 同目录的 lead.php），
+     *           解决浏览器直连企业微信 webhook 被 CORS 拦截的问题。
+     * WEBHOOK ：企业微信群机器人 webhook，仅作直连兜底。
+     */
+    var LEAD_URL = '/lead.php';
     var WEBHOOK = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3cf0ee8e-4e94-4aba-ac83-ca542affa0c7';
 
     function collectFormData() {
@@ -140,40 +145,41 @@
       if (tel && tel.value && !/^1[3-9]\d{9}$/.test(tel.value.trim())) { tel.style.borderColor = '#e8541f'; ok = false; }
       return ok;
     }
+    function postJSON(url, obj) {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obj)
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.errcode === 0) return true;
+        throw new Error((j && j.errmsg) || 'send failed');
+      });
+    }
     function handleSubmit() {
       if (!validForm()) return;
       var btn = form.querySelector('button[type="submit"]');
       setLoading(btn, true);
       var d = collectFormData();
 
-      if (!WEBHOOK) {
-        /* 未配置接收端：直接成功，避免阻塞客户（配置后自动生效） */
-        setTimeout(function () {
-          form.reset(); setLoading(btn, false); showOk();
-        }, 500);
-        return;
-      }
-
-      var payload = {
-        msgtype: 'markdown',
-        markdown: {
-          content: '📋 **虾记代账官网新预约**\n'
-            + '> **称呼**：' + d.name + '\n'
-            + '> **手机**：' + d.tel + '\n'
-            + '> **企业类型**：' + d.type + '\n'
-            + '> **需求**：' + d.desc + '\n'
-            + '> **时间**：' + d.time + '\n'
-            + '> **来源**：' + d.page
-        }
-      };
-      fetch(WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (r) { return r.json(); }).then(function (j) {
-        if (j && j.errcode === 0) { form.reset(); setLoading(btn, false); showOk(); }
-        else { setLoading(btn, false); showFail(); }
-      }).catch(function () { setLoading(btn, false); showFail(); });
+      /* 优先走同源中转接口 lead.php；失败再兜底直连 webhook */
+      postJSON(LEAD_URL, d).catch(function () {
+        return postJSON(WEBHOOK, {
+          msgtype: 'markdown',
+          markdown: {
+            content: '📋 **虾记代账官网新预约**\n'
+              + '> **称呼**：' + d.name + '\n'
+              + '> **手机**：' + d.tel + '\n'
+              + '> **企业类型**：' + d.type + '\n'
+              + '> **需求**：' + d.desc + '\n'
+              + '> **时间**：' + d.time + '\n'
+              + '> **来源**：' + d.page
+          }
+        });
+      }).then(function () {
+        form.reset(); setLoading(btn, false); showOk();
+      }).catch(function () {
+        setLoading(btn, false); showFail();
+      });
     }
     /* 双重绑定：form submit + button click 兜底，避免任何原因导致 submit 事件没触发 */
     form.addEventListener('submit', function (e) { e.preventDefault(); handleSubmit(); });
