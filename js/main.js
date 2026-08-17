@@ -17,39 +17,14 @@
     toggle.addEventListener('click', function () {
       var open = menu.classList.toggle('open');
       toggle.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     menu.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         menu.classList.remove('open');
         toggle.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
       });
     });
   }
-
-  /* 页脚年份自动更新 */
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  /* 工作台 mockup 动态日期（每月 15 日为申报截止日） */
-  (function () {
-    var todayEl = document.getElementById('appToday');
-    var countEl = document.getElementById('appCountdown');
-    if (!todayEl || !countEl) return;
-    var now = new Date();
-    var y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
-    todayEl.textContent = m + ' 月 ' + d + ' 日';
-    var due = new Date(y, m, 15); /* 下月 15 日 */
-    var days = Math.ceil((due - now) / 86400000);
-    if (days > 0 && days <= 31) {
-      countEl.textContent = '距离报税截止还有 ' + days + ' 天';
-    } else if (days > 31) {
-      countEl.textContent = '本月申报已完成 · 下期申报倒计时 ' + days + ' 天';
-    } else {
-      countEl.textContent = '本月申报期已结束，请关注下月申报';
-    }
-  })();
 
   /* 滚动显现动画 */
   var revealEls = document.querySelectorAll('.card, .svc-card, .svc-item, .price-card, .case-card, .faq-item, .contact-info, .contact-form, .stat');
@@ -87,11 +62,7 @@
     if (isNaN(target)) return;
     var dur = 1600, start = null;
     function fmt(n) {
-      if (n >= 10000) {
-        var w = n / 10000;
-        return (w >= 100 || w % 1 === 0 ? String(Math.round(w * 10) / 10) : w.toFixed(1));
-      }
-      return String(Math.round(n));
+      return n >= 10000 ? (n / 10000).toFixed(n >= 1000000 ? 0 : 1) : String(Math.round(n));
     }
     function step(ts) {
       if (!start) start = ts;
@@ -114,55 +85,52 @@
   }, { threshold: 0.4 });
   document.querySelectorAll('.stat').forEach(function (s) { statObs.observe(s); });
 
-  /* 表单提交提示（防重复提交） */
+  /* 表单提交提示 */
   var form = document.getElementById('contactForm');
   var toast = document.getElementById('toast');
-  var toastTimer = null;
-  function showToast(msg) {
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3200);
-  }
+  var formOk = document.getElementById('formSuccess');
   if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = form.querySelector('button[type="submit"]');
-      if (btn.disabled) return; /* 防重复提交 */
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      var payload = {
-        name: (form.querySelector('[name="name"]').value || '').trim(),
-        phone: (form.querySelector('[name="phone"]').value || '').trim(),
-        type: (form.querySelector('[name="type"]').value || '').trim(),
-        message: (form.querySelector('[name="message"]').value || '').trim()
-      };
-      btn.disabled = true;
-      var old = btn.textContent;
-      btn.textContent = '提交中…';
-      /* 提交到官网预约接口（https://www.yuniteam.com/api/lead/） */
-      fetch('https://www.yuniteam.com/api/lead/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (res) {
-        return res.json().catch(function () { return { ok: false }; });
-      }).then(function (data) {
-        if (data && data.ok) {
-          form.reset();
-          showToast('✅ 提交成功！专属顾问将尽快与您联系。');
-        } else {
-          showToast('⚠️ 提交未成功，请直接致电 136-9141-0479');
-        }
-      }).catch(function () {
-        showToast('⚠️ 网络异常，请直接致电 136-9141-0479');
-      }).finally(function () {
-        btn.disabled = false;
-        btn.textContent = old;
+    /* 关闭浏览器原生验证弹框，我们自己校验更可控 */
+    form.setAttribute('novalidate', 'novalidate');
+
+    function showOk() {
+      if (formOk) { formOk.hidden = false; formOk.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      if (toast) { toast.classList.add('show'); setTimeout(function () { toast.classList.remove('show'); }, 3200); }
+    }
+    function setLoading(btn, on) {
+      if (!btn) return;
+      if (on) { btn.dataset.oriText = btn.textContent; btn.textContent = '提交中…'; btn.disabled = true; btn.style.opacity = '.7'; }
+      else { btn.textContent = btn.dataset.oriText || '提交预约'; btn.disabled = false; btn.style.opacity = ''; }
+    }
+    function validForm() {
+      /* 必填检查：称呼、手机、企业类型 */
+      var name = form.querySelector('input[type="text"]');
+      var tel = form.querySelector('input[type="tel"]');
+      var type = form.querySelector('select');
+      var ok = true;
+      [name, tel, type].forEach(function (el) {
+        if (!el) return;
+        if (!el.value || !el.value.trim()) { el.style.borderColor = '#e8541f'; ok = false; }
+        else { el.style.borderColor = ''; }
       });
-    });
+      if (tel && tel.value && !/^1[3-9]\d{9}$/.test(tel.value.trim())) { tel.style.borderColor = '#e8541f'; ok = false; }
+      return ok;
+    }
+    function handleSubmit() {
+      if (!validForm()) return;
+      var btn = form.querySelector('button[type="submit"]');
+      setLoading(btn, true);
+      /* 模拟提交：1.2s 后显示成功（真实接入后端时改这里） */
+      setTimeout(function () {
+        form.reset();
+        if (formOk) formOk.hidden = true; /* 先隐藏，等 reset 后再显示 */
+        setLoading(btn, false);
+        showOk();
+      }, 800);
+    }
+    /* 双重绑定：form submit + button click 兜底，避免任何原因导致 submit 事件没触发 */
+    form.addEventListener('submit', function (e) { e.preventDefault(); handleSubmit(); });
+    var submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.addEventListener('click', function (e) { e.preventDefault(); handleSubmit(); });
   }
 })();
