@@ -89,13 +89,37 @@
   var form = document.getElementById('contactForm');
   var toast = document.getElementById('toast');
   var formOk = document.getElementById('formSuccess');
+  var formError = document.getElementById('formError');
   if (form) {
     /* 关闭浏览器原生验证弹框，我们自己校验更可控 */
     form.setAttribute('novalidate', 'novalidate');
 
+    /* ===== 企业微信机器人接收地址（填表单线索） ===== */
+    var WEBHOOK = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3cf0ee8e-4e94-4aba-ac83-ca542affa0c7';
+
+    function collectFormData() {
+      var v = function (sel) {
+        var el = form.querySelector(sel);
+        return el ? el.value.trim() : '';
+      };
+      return {
+        name: v('input[type="text"]'),
+        tel: v('input[type="tel"]'),
+        type: v('select'),
+        desc: v('textarea') || '未填写',
+        time: new Date().toLocaleString('zh-CN'),
+        page: location.href
+      };
+    }
+
     function showOk() {
+      if (formError) formError.hidden = true;
       if (formOk) { formOk.hidden = false; formOk.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
       if (toast) { toast.classList.add('show'); setTimeout(function () { toast.classList.remove('show'); }, 3200); }
+    }
+    function showFail() {
+      if (formOk) formOk.hidden = true;
+      if (formError) { formError.hidden = false; formError.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     }
     function setLoading(btn, on) {
       if (!btn) return;
@@ -120,13 +144,36 @@
       if (!validForm()) return;
       var btn = form.querySelector('button[type="submit"]');
       setLoading(btn, true);
-      /* 模拟提交：1.2s 后显示成功（真实接入后端时改这里） */
-      setTimeout(function () {
-        form.reset();
-        if (formOk) formOk.hidden = true; /* 先隐藏，等 reset 后再显示 */
-        setLoading(btn, false);
-        showOk();
-      }, 800);
+      var d = collectFormData();
+
+      if (!WEBHOOK) {
+        /* 未配置接收端：直接成功，避免阻塞客户（配置后自动生效） */
+        setTimeout(function () {
+          form.reset(); setLoading(btn, false); showOk();
+        }, 500);
+        return;
+      }
+
+      var payload = {
+        msgtype: 'markdown',
+        markdown: {
+          content: '📋 **虾记代账官网新预约**\n'
+            + '> **称呼**：' + d.name + '\n'
+            + '> **手机**：' + d.tel + '\n'
+            + '> **企业类型**：' + d.type + '\n'
+            + '> **需求**：' + d.desc + '\n'
+            + '> **时间**：' + d.time + '\n'
+            + '> **来源**：' + d.page
+        }
+      };
+      fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.errcode === 0) { form.reset(); setLoading(btn, false); showOk(); }
+        else { setLoading(btn, false); showFail(); }
+      }).catch(function () { setLoading(btn, false); showFail(); });
     }
     /* 双重绑定：form submit + button click 兜底，避免任何原因导致 submit 事件没触发 */
     form.addEventListener('submit', function (e) { e.preventDefault(); handleSubmit(); });
