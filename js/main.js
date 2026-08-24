@@ -155,11 +155,16 @@
         throw new Error((j && j.errmsg) || 'send failed');
       });
     }
+    /* 防重入标记：form submit 与 button click 双绑，个别浏览器下可能触发两次提交，
+     * 加标记避免同一条预约重复发送到企业微信群。 */
+    var submitting = false;
     function handleSubmit() {
+      if (submitting) return;
       if (!validForm()) return;
       var btn = form.querySelector('button[type="submit"]');
       setLoading(btn, true);
       var d = collectFormData();
+      submitting = true;
 
       /* 优先走同源中转接口 lead.php；失败再兜底直连 webhook */
       postJSON(LEAD_URL, d).catch(function () {
@@ -179,6 +184,8 @@
         form.reset(); setLoading(btn, false); showOk();
       }).catch(function () {
         setLoading(btn, false); showFail();
+      }).then(function () {
+        submitting = false;
       });
     }
     /* 双重绑定：form submit + button click 兜底，避免任何原因导致 submit 事件没触发 */
